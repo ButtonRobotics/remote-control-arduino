@@ -1,0 +1,48 @@
+Receiver
+ - watchdog
+ - detekce chyby + buzzer + prestat posilat can zpravy!
+ - napajeni na cuprextit
+ - vytisk
+ - 12V + idealne barrel connector (nebo nejake svorky)
+ - spi/can module (mcp2515) + dsub9 male (trny)
+ - xbee proS1 + antena ven z robota
+--------------------------------------------------------------------------------
+Joystick
+ - watchdog
+ - rozsireni 'slepe zona' klidove polohy joysticku
+ - napajeni na cuprextit
+ - vytisk
+ - powerbanka
+ - xbee proS1 + antena do krabicky
+--------------------------------------------------------------------------------  
+specifikace:
+ - 9600 bps
+ - frekvence komunikace 50hz (20ms)
+-------------------------------------------------------------------------------- 
+rizeni:
+ - vzdy jen predni naprava (31h - 36h); maximalni hodnota 900 (0 0 0 0 0 0 3 132)
+ - zadni naprava musi byt odbrzdena (21h - 26h); obsah zpravy 0
+--------------------------------------------------------------------------------  
+can:
+ - standard messages - 500kB/s
+ - cs_pin 10: MCP_CAN CAN(10);
+ - without terminator
+ 
+K2:
+front-right: from Receiver to junction_module	031h
+front-left:  from Receiver to junction_module	032h
+rear-left:   from Receiver to junction_module	033h
+rear-right:  from Receiver to junction_module	034h
+
+K3:
+front-right: from Receiver to junction_module	031h
+front-left:  from Receiver to junction_module	032h
+
+rear-left:   from Receiver to junction_module	035h
+rear-right:  from Receiver to junction_module	036h
+
+
+ 
+
+
+
