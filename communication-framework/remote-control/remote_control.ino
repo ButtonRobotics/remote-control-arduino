@@ -112,20 +112,16 @@ void blink() {
 }
 
 void parseSerialPacket(byte start, byte flag, byte val1, byte val2, byte end_pckt) {
-  if (serial_connected == false) {
-    if (flag == FLAG_HANDSHAKE_SLAVE && val1 == session_key) {
+    if (flag == FLAG_STILL_ALIVE_CHECK_QUESTION && serial_connected) {
+      Serial.println("FLAG_STILL_ALIVE_CHECK_QUESTION"); // asdfasdfasdf
+      sendStillAliveCheckAnswerPacket(val1, val2);
+      time_of_still_alive_check = millis();
+    } else if (flag == FLAG_HANDSHAKE_SLAVE && val1 == session_key && serial_connected) {
       Serial.println("FLAG_HANDSHAKE_SLAVE"); // adsfasdfasdf
       sendHandshakeSlaveConfirmationPacket();
       serial_connected = true;
       time_of_still_alive_check = millis();
     }
-  } else {
-    if (flag == FLAG_STILL_ALIVE_CHECK_QUESTION) {
-      Serial.println("FLAG_STILL_ALIVE_CHECK_QUESTION"); // adsfasdfasdf
-      sendStillAliveCheckAnswerPacket(val1, val2);
-      time_of_still_alive_check = millis();
-    }
-  }
 }
 
 void sendStillAliveCheckAnswerPacket(byte val1, byte val2) {
