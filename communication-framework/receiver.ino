@@ -60,7 +60,7 @@ void reset() {
   printDebug("RESET");
   serial_connected = false;
   session_key = 0;
-  time_of_still_alive_check = 4294967295;
+  time_of_still_alive_check = ULONG_MAX;
   sent_still_alive_check_packet = false;
 }
 
