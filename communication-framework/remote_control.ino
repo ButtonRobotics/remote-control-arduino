@@ -1,7 +1,6 @@
 #include "com_flags.h"
 #include "shared_settings.h"
 
-
 // SESSION VARIABLES
 bool serial_connected;
 byte session_key;
@@ -10,28 +9,31 @@ unsigned long current_time;
 
 bool blink_w, blink_g, blink_r, blink_y;
 
-
 // PIN SETTINGS
 byte led_w = 4;
 byte led_g = 5;
 byte led_r = 6;
 byte led_y = 7;
-void setup() {
+void setup()
+{
   current_time = millis();
   Serial.begin(BAUD_RATE);
   reset();
   ledSetup();
 }
 
-void loop() {
+void loop()
+{
   // Serial.flush();
   current_time = millis();
   checkIncomingCommunication();
-  if (serial_connected && !stillAliveCheck()) {
+  if (serial_connected && !stillAliveCheck())
+  {
     reset();
   }
 
-  if (!serial_connected) { // TODO#1: send every x millis
+  if (!serial_connected)
+  { // TODO#1: send every x millis
     sendHandshakeMasterPacket();
   }
 
@@ -39,7 +41,8 @@ void loop() {
   // delay(5); // instead of delay, do TODO#1
 }
 
-void reset() {
+void reset()
+{
   printDebug("RESET");
   serial_connected = false;
   randomSeed(analogRead(0));
@@ -53,21 +56,27 @@ void reset() {
   blink_y = false;
 }
 
-bool stillAliveCheck() {
+bool stillAliveCheck()
+{
   return !(current_time - time_of_still_alive_check > STILL_ALIVE_CHECK_TIMEOUT_IN_MILLIS);
 }
 
-void checkIncomingCommunication() {
+void checkIncomingCommunication()
+{
   byte packetParts[5];
   unsigned int num_of_incoming_bytes = Serial.available();
-  for (byte i = 0; i < num_of_incoming_bytes && Serial.available() >= 5; i++) {
-    if (Serial.peek() != PACKET_START) {
+  for (byte i = 0; i < num_of_incoming_bytes && Serial.available() >= 5; i++)
+  {
+    if (Serial.peek() != PACKET_START)
+    {
       Serial.read();
       continue;
     }
-    for (byte j = 0; j < 5 && ((j == 4 && Serial.peek() == PACKET_END) || Serial.peek() != PACKET_END); j++) {
+    for (byte j = 0; j < 5 && ((j == 4 && Serial.peek() == PACKET_END) || Serial.peek() != PACKET_END); j++)
+    {
       packetParts[j] = Serial.read();
-      if (j == 4) {
+      if (j == 4)
+      {
         parseSerialPacket(packetParts[0], packetParts[1],
                           packetParts[2], packetParts[3], packetParts[4]);
       }
@@ -75,7 +84,8 @@ void checkIncomingCommunication() {
   }
 }
 
-void ledSetup() {
+void ledSetup()
+{
   pinMode(led_w, OUTPUT);
   pinMode(led_g, OUTPUT);
   pinMode(led_r, OUTPUT);
@@ -91,35 +101,44 @@ void ledSetup() {
   blink_y = true;
 }
 
-void blink() {
+void blink()
+{
 }
 
-void parseSerialPacket(byte start, byte flag, byte val1, byte val2, byte end_pckt) {
-    if (flag == FLAG_STILL_ALIVE_CHECK_QUESTION && serial_connected) {
-      printDebug("FLAG_STILL_ALIVE_CHECK_QUESTION");
-      sendStillAliveCheckAnswerPacket(val1, val2);
-      time_of_still_alive_check = millis();
-    } else if (flag == FLAG_HANDSHAKE_SLAVE && val1 == session_key && serial_connected) {
-      sendHandshakeSlaveConfirmationPacket();
-      serial_connected = true;
-      time_of_still_alive_check = millis();
-      printDebug("FLAG_HANDSHAKE_SLAVE");
-    }
+void parseSerialPacket(byte start, byte flag, byte val1, byte val2, byte end_pckt)
+{
+  if (flag == FLAG_STILL_ALIVE_CHECK_QUESTION && serial_connected)
+  {
+    printDebug("FLAG_STILL_ALIVE_CHECK_QUESTION");
+    sendStillAliveCheckAnswerPacket(val1, val2);
+    time_of_still_alive_check = millis();
+  }
+  else if (flag == FLAG_HANDSHAKE_SLAVE && val1 == session_key && serial_connected)
+  {
+    sendHandshakeSlaveConfirmationPacket();
+    serial_connected = true;
+    time_of_still_alive_check = millis();
+    printDebug("FLAG_HANDSHAKE_SLAVE");
+  }
 }
 
-void sendStillAliveCheckAnswerPacket(byte val1, byte val2) {
+void sendStillAliveCheckAnswerPacket(byte val1, byte val2)
+{
   sendPacket(FLAG_STILL_ALIVE_CHECK_ANSWER, val1, val2);
 }
 
-void sendHandshakeSlaveConfirmationPacket() {
+void sendHandshakeSlaveConfirmationPacket()
+{
   sendPacket(FLAG_HANDSHAKE_SLAVE_CONFIRMATION, session_key, 0);
 }
 
-void sendHandshakeMasterPacket() {
+void sendHandshakeMasterPacket()
+{
   sendPacket(FLAG_HANDSHAKE_MASTER, session_key, 0);
 }
 
-void sendPacket(byte flag, byte value1, byte value2) {
+void sendPacket(byte flag, byte value1, byte value2)
+{
   digitalWrite(led_w, LOW);
   Serial.write(PACKET_START);
   Serial.write(flag);
@@ -130,6 +149,7 @@ void sendPacket(byte flag, byte value1, byte value2) {
 }
 
 // remove printDebug for release
-void printDebug(string text) {
+void printDebug(string text)
+{
   Serial.println(text);
 }
