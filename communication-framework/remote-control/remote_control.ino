@@ -117,10 +117,10 @@ void parseSerialPacket(byte start, byte flag, byte val1, byte val2, byte end_pck
       sendStillAliveCheckAnswerPacket(val1, val2);
       time_of_still_alive_check = millis();
     } else if (flag == FLAG_HANDSHAKE_SLAVE && val1 == session_key && serial_connected) {
-      printDebug("FLAG_HANDSHAKE_SLAVE");
       sendHandshakeSlaveConfirmationPacket();
       serial_connected = true;
       time_of_still_alive_check = millis();
+      printDebug("FLAG_HANDSHAKE_SLAVE");
     }
 }
 
