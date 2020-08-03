@@ -57,7 +57,7 @@ void ledSetup() {
 }
 
 void reset() {
-  Serial.println("RESET"); // asdfasdfas
+  printDebug("RESET");
   serial_connected = false;
   session_key = 0;
   time_of_still_alive_check = 4294967295;
@@ -107,17 +107,17 @@ void parseSerialPacket(byte end_pckt, byte val2, byte val1, byte flag, byte star
   digitalWrite(led_g, LOW);
   if (serial_connected == false) {
     if (flag == FLAG_HANDSHAKE_MASTER) {
-      Serial.println("FLAG_HANDSHAKE_MASTER"); // adsfasdfasdf
+      printDebug("FLAG_HANDSHAKE_MASTER");
       sendHandshakeSlavePacket(val1);
     } else if (flag == FLAG_HANDSHAKE_SLAVE_CONFIRMATION) {
-      Serial.println("FLAG_HANDSHAKE_SLAVE_CONFIRMATION"); // adsfasdfasdf
+      printDebug("FLAG_HANDSHAKE_SLAVE_CONFIRMATION");
       session_key = val1;
       serial_connected = true;
       time_of_still_alive_check = millis();
     }
   } else {
     if (flag == FLAG_STILL_ALIVE_CHECK_ANSWER) {
-      Serial.println("FLAG_STILL_ALIVE_CHECK_ANSWER"); // adsfasdfasdf
+      printDebug("FLAG_STILL_ALIVE_CHECK_ANSWER");
       if (val1 == session_key && val2 == still_alive_check_key &&
           current_time - time_of_still_alive_check < STILL_ALIVE_CHECK_TIMEOUT_IN_MILLIS) {
         time_of_still_alive_check = millis();
@@ -146,4 +146,9 @@ void sendPacket(byte flag, byte value1, byte value2) {
   Serial.write(value2);
   Serial.write(PACKET_END);
   Serial.println();
+}
+
+// remove printDebug for release
+void printDebug(string text) {
+  Serial.println(text);
 }
