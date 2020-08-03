@@ -48,7 +48,7 @@ void reset()
   printDebug("RESET");
   serial_connected = false;
   randomSeed(millis());
-  session_key = (byte)random(255);
+  session_key = (byte)micros() & 0xFF;
   time_of_still_alive_check = ULONG_MAX;
 
   // led
