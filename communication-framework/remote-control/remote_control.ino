@@ -85,8 +85,8 @@ void checkIncomingCommunication() {
     for (byte j = 0; j < 5 && ((j == 4 && Serial.peek() == PACKET_END) || Serial.peek() != PACKET_END); j++) {
       packetParts[j] = Serial.read();
       if (j == 4) {
-        parseSerialPacket(packetParts[4], packetParts[3],
-                          packetParts[2], packetParts[1], packetParts[0]);
+        parseSerialPacket(packetParts[0], packetParts[1],
+                          packetParts[2], packetParts[3], packetParts[4]);
       }
     }
   }
@@ -111,7 +111,7 @@ void ledSetup() {
 void blink() {
 }
 
-void parseSerialPacket(byte end_pckt, byte val2, byte val1, byte flag, byte start) {
+void parseSerialPacket(byte start, byte flag, byte val1, byte val2, byte end_pckt) {
   if (serial_connected == false) {
     if (flag == FLAG_HANDSHAKE_SLAVE && val1 == session_key) {
       Serial.println("FLAG_HANDSHAKE_SLAVE"); // adsfasdfasdf
