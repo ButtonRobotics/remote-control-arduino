@@ -3,7 +3,6 @@
 
 // TIMING
 const unsigned int STILL_ALIVE_CHECK_PERIOD_IN_MILLIS = 400;
-const unsigned int STILL_ALIVE_CHECK_TIMEOUT_IN_MILLIS = 1000;
 const unsigned int BLINK_SPEED = 40;
 
 // SESSION VARIABLES

@@ -1,8 +1,6 @@
 #include "com_flags.h"
 #include "shared_settings.h"
 
-// TIMING
-const unsigned int STILL_ALIVE_CHECK_TIMEOUT_IN_MILLIS = 1000;
 
 // SESSION VARIABLES
 bool serial_connected;
