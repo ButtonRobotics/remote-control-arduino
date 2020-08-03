@@ -13,7 +13,7 @@ const byte FLAG_HANDBREAK = 9;
 const unsigned int STILL_ALIVE_CHECK_TIMEOUT_IN_MILLIS = 1000;
 
 // OTHER CONSTANTS
-const unsigned int BAUD_RATE = 38400;
+const unsigned int BAUD_RATE = 9600;
 
 // PACKET COMPOSITION
 const byte PACKET_START = 145;
@@ -48,17 +48,12 @@ void loop() {
     reset();
   }
 
-
-  if (serial_connected == false) {
+  if (!serial_connected) { // TODO#1: send every x millis
     sendHandshakeMasterPacket();
   }
 
-  if (serial_connected) {
-    digitalWrite(led_r, HIGH);
-  } else {
-    digitalWrite(led_r, LOW);
-  }
-  delay(5);
+  digitalWrite(led_r, serial_connected);
+  // delay(5); // instead of delay, do TODO#1
 }
 
 void reset() {
@@ -66,7 +61,7 @@ void reset() {
   serial_connected = false;
   randomSeed(analogRead(0));
   session_key = (byte)random(255);
-  time_of_still_alive_check = 4294967295;
+  time_of_still_alive_check = ULONG_MAX;
 
   // led
   blink_w = false;
@@ -76,12 +71,7 @@ void reset() {
 }
 
 bool stillAliveCheck() {
-  bool isAlive = true;
-  if (current_time > time_of_still_alive_check &&
-      current_time - time_of_still_alive_check > STILL_ALIVE_CHECK_TIMEOUT_IN_MILLIS) {
-    isAlive = false;
-  }
-  return isAlive;
+  return !(current_time - time_of_still_alive_check > STILL_ALIVE_CHECK_TIMEOUT_IN_MILLIS);
 }
 
 void checkIncomingCommunication() {
@@ -156,8 +146,6 @@ void sendHandshakeMasterPacket() {
 }
 
 void sendPacket(byte flag, byte value1, byte value2) {
-  digitalWrite(led_w, HIGH);
-  delay(50);
   digitalWrite(led_w, LOW);
   Serial.write(PACKET_START);
   Serial.write(flag);
