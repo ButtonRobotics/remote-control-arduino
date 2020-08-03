@@ -1,16 +1,10 @@
 #include "com_flags.h"
+#include "shared_settings.h"
 
 // TIMING
 const unsigned int STILL_ALIVE_CHECK_PERIOD_IN_MILLIS = 400;
 const unsigned int STILL_ALIVE_CHECK_TIMEOUT_IN_MILLIS = 1000;
 const unsigned int BLINK_SPEED = 40;
-
-// OTHER CONSTANTS
-const unsigned int BAUD_RATE = 38400;
-
-// PACKET COMPOSITION
-const byte PACKET_START = 145;
-const byte PACKET_END = 137;
 
 // SESSION VARIABLES
 bool serial_connected;
