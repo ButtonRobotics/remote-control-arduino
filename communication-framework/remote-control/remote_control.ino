@@ -112,12 +112,6 @@ void blink() {
 }
 
 void parseSerialPacket(byte end_pckt, byte val2, byte val1, byte flag, byte start) {
-  if (start != PACKET_START || end_pckt != PACKET_END) {
-    return;
-  }
-  digitalWrite(led_g, HIGH);
-  delay(50);
-  digitalWrite(led_g, LOW);
   if (serial_connected == false) {
     if (flag == FLAG_HANDSHAKE_SLAVE && val1 == session_key) {
       Serial.println("FLAG_HANDSHAKE_SLAVE"); // adsfasdfasdf
