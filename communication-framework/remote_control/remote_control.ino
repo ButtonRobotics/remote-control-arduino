@@ -47,7 +47,7 @@ void reset()
 {
   printDebug("RESET");
   serial_connected = false;
-  randomSeed(analogRead(0));
+  randomSeed(millis());
   session_key = (byte)random(255);
   time_of_still_alive_check = ULONG_MAX;
 

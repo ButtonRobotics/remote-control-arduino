@@ -25,6 +25,7 @@ byte led_r = 8;
 byte led_y = 10;
 void setup()
 {
+  // TODO turn off ADC if not in use to save power
   current_time = millis();
   Serial.begin(BAUD_RATE);
   reset();
@@ -42,14 +43,7 @@ void loop()
     reset();
   }
 
-  if (serial_connected)
-  {
-    digitalWrite(led_r, HIGH);
-  }
-  else
-  {
-    digitalWrite(led_r, LOW);
-  }
+  digitalWrite(led_r, serial_connected);
   delay(5);
 }
 
