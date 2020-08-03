@@ -57,7 +57,7 @@ void loop() {
 }
 
 void reset() {
-  Serial.println("RESET"); // asdfasdfas
+  printDebug("RESET");
   serial_connected = false;
   randomSeed(analogRead(0));
   session_key = (byte)random(255);
@@ -113,11 +113,11 @@ void blink() {
 
 void parseSerialPacket(byte start, byte flag, byte val1, byte val2, byte end_pckt) {
     if (flag == FLAG_STILL_ALIVE_CHECK_QUESTION && serial_connected) {
-      Serial.println("FLAG_STILL_ALIVE_CHECK_QUESTION"); // asdfasdfasdf
+      printDebug("FLAG_STILL_ALIVE_CHECK_QUESTION");
       sendStillAliveCheckAnswerPacket(val1, val2);
       time_of_still_alive_check = millis();
     } else if (flag == FLAG_HANDSHAKE_SLAVE && val1 == session_key && serial_connected) {
-      Serial.println("FLAG_HANDSHAKE_SLAVE"); // adsfasdfasdf
+      printDebug("FLAG_HANDSHAKE_SLAVE");
       sendHandshakeSlaveConfirmationPacket();
       serial_connected = true;
       time_of_still_alive_check = millis();
@@ -144,4 +144,9 @@ void sendPacket(byte flag, byte value1, byte value2) {
   Serial.write(value2);
   Serial.write(PACKET_END);
   Serial.println();
+}
+
+// remove printDebug for release
+void printDebug(string text) {
+  Serial.println(text);
 }
