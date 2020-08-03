@@ -1,5 +1,5 @@
-#include "com_flags.h"
-#include "shared_settings.h"
+#include ".\src\com_flags.h"
+#include ".\src\shared_settings.h"
 
 // TIMING
 const unsigned int STILL_ALIVE_CHECK_PERIOD_IN_MILLIS = 400;
