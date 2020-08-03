@@ -75,11 +75,12 @@ bool stillAliveCheck() {
 }
 
 void checkIncomingCommunication() {
-  unsigned int i = 0;
   byte packetParts[5];
-  for (byte i = 0; i < 100 && Serial.available() >= 5; i++) {
-    while (Serial.available() > 0 && Serial.peek() != PACKET_START) {
+  unsigned int num_of_incoming_bytes = Serial.available();
+  for (byte i = 0; i < num_of_incoming_bytes && Serial.available() >= 5; i++) {
+    if (Serial.peek() != PACKET_START) {
       Serial.read();
+      continue;
     }
     for (byte j = 0; j < 5 && ((j == 4 && Serial.peek() == PACKET_END) || Serial.peek() != PACKET_END); j++) {
       packetParts[j] = Serial.read();
