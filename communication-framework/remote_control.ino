@@ -1,13 +1,4 @@
-// FLAGS
-const byte FLAG_HANDSHAKE_MASTER = 1;
-const byte FLAG_HANDSHAKE_SLAVE = 2;
-const byte FLAG_HANDSHAKE_SLAVE_CONFIRMATION = 3;
-const byte FLAG_STILL_ALIVE_CHECK_QUESTION = 4;
-const byte FLAG_STILL_ALIVE_CHECK_ANSWER = 5;
-const byte FLAG_RESTART = 6;
-const byte FLAG_ACTION_MOVE = 7;
-const byte FLAG_ACTION_STOP = 8;
-const byte FLAG_HANDBREAK = 9;
+#include "com_flags.h"
 
 // TIMING
 const unsigned int STILL_ALIVE_CHECK_TIMEOUT_IN_MILLIS = 1000;
