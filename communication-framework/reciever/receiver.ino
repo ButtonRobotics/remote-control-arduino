@@ -1,6 +1,8 @@
 #include ".\src\com_flags.h"
 #include ".\src\shared_settings.h"
 
+#define ULONG_MAX 0xffffffffUL
+
 // TIMING
 const unsigned int STILL_ALIVE_CHECK_PERIOD_IN_MILLIS = 400;
 const unsigned int BLINK_SPEED = 40;

@@ -1,6 +1,8 @@
 #include ".\src\com_flags.h"
 #include ".\src\shared_settings.h"
 
+#define ULONG_MAX 0xffffffffUL
+
 // SESSION VARIABLES
 bool serial_connected;
 byte session_key;
