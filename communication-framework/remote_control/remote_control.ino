@@ -40,7 +40,6 @@ void loop()
     sendHandshakeMasterPacket();
     delay(50);
   }
-
 }
 
 void reset()
@@ -150,7 +149,7 @@ void sendPacket(byte flag, byte value1, byte value2)
 }
 
 // remove printDebug for release
-void printDebug(const char* text)
+void printDebug(const char *text)
 {
   Serial.println(*text);
 }
