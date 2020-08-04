@@ -34,13 +34,13 @@ void loop()
     reset();
   }
 
+  digitalWrite(led_r, serial_connected);
   if (!serial_connected)
-  { // TODO#1: send every x millis
+  {
     sendHandshakeMasterPacket();
+    delay(50);
   }
 
-  digitalWrite(led_r, serial_connected);
-  // delay(5); // instead of delay, do TODO#1
 }
 
 void reset()
