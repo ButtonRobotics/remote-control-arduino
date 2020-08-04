@@ -112,10 +112,6 @@ void blink()
 
 void parseSerialPacket(byte start, byte flag, byte val1, byte val2, byte end_pckt)
 {
-  if (start != PACKET_START || end_pckt != PACKET_END)
-  {
-    return;
-  }
   if (serial_connected == false)
   {
     if (flag == FLAG_HANDSHAKE_MASTER)
