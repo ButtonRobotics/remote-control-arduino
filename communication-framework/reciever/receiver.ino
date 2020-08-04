@@ -99,8 +99,8 @@ void checkIncomingCommunication()
       packetParts[j] = Serial.read();
       if (j == 4)
       {
-        parseSerialPacket(packetParts[4], packetParts[3],
-                          packetParts[2], packetParts[1], packetParts[0]);
+        parseSerialPacket(packetParts[0], packetParts[1],
+                          packetParts[2], packetParts[3], packetParts[4]);
       }
     }
   }
@@ -110,7 +110,7 @@ void blink()
 {
 }
 
-void parseSerialPacket(byte end_pckt, byte val2, byte val1, byte flag, byte start)
+void parseSerialPacket(byte start, byte flag, byte val1, byte val2, byte end_pckt)
 {
   if (start != PACKET_START || end_pckt != PACKET_END)
   {
