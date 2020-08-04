@@ -21,7 +21,7 @@ void setup()
   current_time = millis();
   Serial.begin(BAUD_RATE);
   reset();
-  ledSetup();
+  //ledSetup();
 }
 
 void loop()

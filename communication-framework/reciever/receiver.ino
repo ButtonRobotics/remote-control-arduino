@@ -29,7 +29,7 @@ void setup()
   current_time = millis();
   Serial.begin(BAUD_RATE);
   reset();
-  ledSetup();
+  //ledSetup();
 }
 
 void loop()
@@ -117,9 +117,6 @@ void parseSerialPacket(byte end_pckt, byte val2, byte val1, byte flag, byte star
   {
     return;
   }
-  digitalWrite(led_g, HIGH);
-  delay(50);
-  digitalWrite(led_g, LOW);
   if (serial_connected == false)
   {
     if (flag == FLAG_HANDSHAKE_MASTER)
@@ -164,9 +161,6 @@ void sendHandshakeSlavePacket(byte temp_session_key)
 
 void sendPacket(byte flag, byte value1, byte value2)
 {
-  digitalWrite(led_w, HIGH);
-  delay(50);
-  digitalWrite(led_w, LOW);
   Serial.write(PACKET_START);
   Serial.write(flag);
   Serial.write(value1);
