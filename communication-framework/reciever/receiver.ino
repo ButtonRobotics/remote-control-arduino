@@ -71,8 +71,7 @@ void reset()
 bool stillAliveCheck()
 {
   bool isAlive = true;
-  if (current_time > time_of_still_alive_check &&
-      current_time - time_of_still_alive_check > STILL_ALIVE_CHECK_TIMEOUT_IN_MILLIS)
+  if (current_time - time_of_still_alive_check > STILL_ALIVE_CHECK_TIMEOUT_IN_MILLIS)
   {
     isAlive = false;
   }
