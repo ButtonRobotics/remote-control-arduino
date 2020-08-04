@@ -124,16 +124,17 @@ void parseSerialPacket(byte end_pckt, byte val2, byte val1, byte flag, byte star
   {
     if (flag == FLAG_HANDSHAKE_MASTER)
     {
-      printDebug("FLAG_HANDSHAKE_MASTER");
       sendHandshakeSlavePacket(val1);
+      printDebug("FLAG_HANDSHAKE_MASTER");
     }
     else if (flag == FLAG_HANDSHAKE_SLAVE_CONFIRMATION)
     {
-      printDebug("FLAG_HANDSHAKE_SLAVE_CONFIRMATION");
+      time_of_still_alive_check = millis();
       session_key = val1;
       serial_connected = true;
-      time_of_still_alive_check = millis();
+      printDebug("FLAG_HANDSHAKE_SLAVE_CONFIRMATION");
     }
+    delay(10);
   }
   else
   {
